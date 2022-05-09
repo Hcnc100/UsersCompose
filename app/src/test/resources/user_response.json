@@ -1,0 +1,41 @@
+{
+  "results": [
+    {
+      "name": {
+        "title": "Ms",
+        "first": "Soledad",
+        "last": "Iglesias"
+      },
+      "location": {
+        "street": {
+          "number": 831,
+          "name": "Calle de Téllez"
+        },
+        "city": "Alcobendas",
+        "state": "Navarra",
+        "country": "Spain",
+        "postcode": 10708,
+        "coordinates": {
+          "latitude": "5.7694",
+          "longitude": "165.8289"
+        },
+        "timezone": {
+          "offset": "+1:00",
+          "description": "Brussels, Copenhagen, Madrid, Paris"
+        }
+      },
+      "email": "soledad.iglesias@example.com",
+      "picture": {
+        "large": "https://randomuser.me/api/portraits/women/78.jpg",
+        "medium": "https://randomuser.me/api/portraits/med/women/78.jpg",
+        "thumbnail": "https://randomuser.me/api/portraits/thumb/women/78.jpg"
+      }
+    }
+  ],
+  "info": {
+    "seed": "dc48f4db1e6ce5e6",
+    "results": 1,
+    "page": 1,
+    "version": "1.3"
+  }
+}

@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">UsersCompose</string>
+
+    <!-- selection resource-->
+    <plurals name="selected_items">
+        <item quantity="one">Un elemento seleccionado</item>
+        <item quantity="other">%d elementos seleccionados</item>
+    </plurals>
+    <plurals name="deleted_items">
+        <item quantity="one">Un elemento eliminado</item>
+        <item quantity="other">%d elementos eliminados</item>
+    </plurals>
+
+    <!-- message error request -->
+    <string name="error_internet">No hay conexion a intenet</string>
+    <string name="server_time_now">Hay un error en la conexcion</string>
+    <string name="error_unknow">Error desconocido</string>
+
+    <!-- toolbar actions -->
+    <string name="description_clear_selection">Icono para limpiar la selección</string>
+    <string name="description_arrow_back">Icono para regresar a la pantalla anterior</string>
+    <string name="description_icon_options">Abrir el menú de opciones</string>
+    <string name="deleter_all">Elimina todos los usuarios</string>
+
+    <!-- users screen -->
+    <string name="action_stop_add_user">Se cancelo la operacion</string>
+    <string name="text_empty_users">No hay usuarios guardados, agrega uno</string>
+    <string name="title_numbers_user_saved">Número de usuarios %d</string>
+    <string name="description_add_mew_user">Agrega un nuevo usuario</string>
+    <string name="description_deleter_user_selected">Elimina los usuarios seleccionados</string>
+    <string name="description_cancel_add_user">Cancela la operacion actual</string>
+    <string name="description_img_user">Imagen del usuario</string>
+
+    <!-- details screen -->
+    <string name="title_details_user">Detalles del usuario</string>
+    <string name="error_users_database">Error al obtener los usuarios de la base de datos</string>
+
+</resources>
