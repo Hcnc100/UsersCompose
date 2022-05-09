@@ -33,6 +33,7 @@ import com.nullpointer.userscompose.presentation.UsersViewModel
 import com.nullpointer.userscompose.ui.screens.destinations.DetailsScreenDestination
 import com.nullpointer.userscompose.ui.screens.empty.EmptyScreen
 import com.nullpointer.userscompose.ui.screens.users.components.UserItem
+import com.nullpointer.userscompose.ui.share.BackHandler
 import com.nullpointer.userscompose.ui.share.ButtonToggleAddRemove
 import com.nullpointer.userscompose.ui.share.FabAnimation
 import com.nullpointer.userscompose.ui.share.SelectionMenuToolbar
@@ -65,6 +66,9 @@ fun UsersScreen(
                 )
             }
         }
+    }
+    BackHandler(selectViewModel.isSelectedEnable) {
+        selectViewModel.clearSelection()
     }
 
     Scaffold(
