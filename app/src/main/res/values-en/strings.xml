@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">UsersCompose</string>
+
+    <!-- selection resource-->
+    <plurals name="selected_items">
+        <item quantity="one">A selected item</item>
+        <item quantity="other">%d items selected</item>
+    </plurals>
+    <plurals name="deleted_items">
+        <item quantity="one">A deleted item</item>
+        <item quantity="other">%d items removed</item>
+    </plurals>
+
+    <!-- message error request -->
+    <string name="error_internet">There is no Internet connection</string>
+    <string name="server_time_now">There is a connection error</string>
+    <string name="error_unknow">Unknown error</string>
+
+    <!-- toolbar actions -->
+    <string name="description_clear_selection">Icon to clear the selection</string>
+    <string name="description_arrow_back">Icon to return to the previous screen</string>
+    <string name="description_icon_options">Open the options menu</string>
+    <string name="deleter_all">Delete all users</string>
+
+    <!-- users screen -->
+    <string name="action_stop_add_user">The operation was canceled</string>
+    <string name="text_empty_users">There are no saved users, add one</string>
+    <string name="title_numbers_user_saved">Number of users %d</string>
+    <string name="description_add_mew_user">Add a new user</string>
+    <string name="description_deleter_user_selected">Delete selected users</string>
+    <string name="description_cancel_add_user">Cancel the current operation</string>
+    <string name="description_img_user">User Image</string>
+
+    <!-- details screen -->
+    <string name="title_details_user">User details</string>
+    <string name="error_users_database">Error getting users from database</string>
+
+</resources>

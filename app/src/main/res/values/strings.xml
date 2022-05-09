@@ -12,8 +12,8 @@
     </plurals>
 
     <!-- message error request -->
-    <string name="error_internet">No hay conexion a intenet</string>
-    <string name="server_time_now">Hay un error en la conexcion</string>
+    <string name="error_internet">No hay conexión a internet</string>
+    <string name="server_time_now">Hay un error en la conexión</string>
     <string name="error_unknow">Error desconocido</string>
 
     <!-- toolbar actions -->
@@ -23,7 +23,7 @@
     <string name="deleter_all">Elimina todos los usuarios</string>
 
     <!-- users screen -->
-    <string name="action_stop_add_user">Se cancelo la operacion</string>
+    <string name="action_stop_add_user">Se canceló la operación</string>
     <string name="text_empty_users">No hay usuarios guardados, agrega uno</string>
     <string name="title_numbers_user_saved">Número de usuarios %d</string>
     <string name="description_add_mew_user">Agrega un nuevo usuario</string>
