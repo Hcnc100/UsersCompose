@@ -1,8 +1,7 @@
 package com.nullpointer.userscompose.usersRepo.repository
 
 
-import com.nullpointer.userscompose.data.remote.UserDataSource
-import com.nullpointer.userscompose.data.remote.UserDataSource.Companion.USER_END_POINT
+import com.nullpointer.userscompose.data.remote.UserApiServices
 import com.nullpointer.userscompose.domain.users.UserRepoImpl
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.Dispatcher
@@ -54,7 +53,7 @@ class MockUser {
         .baseUrl(mockWebServer.url("/"))
         .client(OkHttpClient.Builder().build())
         .addConverterFactory(GsonConverterFactory.create())
-        .build().create(UserDataSource::class.java)
+        .build().create(UserApiServices::class.java)
 
     val userRepository = UserRepoImpl(MockUserDao(),userDataSource)
 }

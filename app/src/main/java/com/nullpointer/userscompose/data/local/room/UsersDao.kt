@@ -11,20 +11,20 @@ interface UsersDao {
     fun getAllUsers():Flow<List<User>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addNewUser(user:User)
+    suspend fun addNewUser(user:User)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addListUsers(list: List<User>)
+    suspend fun addListUsers(list: List<User>)
 
     @Delete
-    fun deleterUser(user: User)
+    suspend fun deleterUser(user: User)
 
     @Query("DELETE FROM users_table WHERE id IN (:list)")
-    fun deleterUsersBYId(list:List<Long>)
+    suspend fun deleterUsersById(list:List<Long>)
 
     @Query("DELETE FROM users_table")
-    fun deleterAllUsers()
+    suspend fun deleterAllUsers()
 
     @Query("SELECT * FROM users_table WHERE id=:id")
-    fun getUserById(id:Long):User?
+    suspend fun getUserById(id:Long):User?
 }

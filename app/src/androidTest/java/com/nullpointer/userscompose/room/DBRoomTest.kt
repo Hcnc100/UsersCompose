@@ -113,7 +113,7 @@ class DBRoomTest {
 
         val randomUser = listUsersFake.random()
         // * only one random user is true remove the other is random ids
-        userDao.deleterUsersBYId(listOf(randomUser.id!!, 123, 246))
+        userDao.deleterUsersById(listOf(randomUser.id!!, 123, 246))
 
         val listUsers = userDao.getAllUsers().first()
         // * expect list with only random user removed
@@ -149,7 +149,7 @@ class DBRoomTest {
         }
 
 
-        userDao.deleterUsersBYId(listUserIdsRandom.toList())
+        userDao.deleterUsersById(listUserIdsRandom.toList())
         val listUsersFinal = userDao.getAllUsers().first()
         assertEquals(listUsersFinal.size, listUsersFake.size - listUserIdsRandom.toList().size)
     }
