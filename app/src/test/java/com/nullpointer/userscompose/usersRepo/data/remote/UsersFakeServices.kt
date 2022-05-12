@@ -1,8 +1,6 @@
-package com.nullpointer.userscompose.usersRepo.repository
-
+package com.nullpointer.userscompose.usersRepo.data.remote
 
 import com.nullpointer.userscompose.data.remote.UserApiServices
-import com.nullpointer.userscompose.domain.users.UserRepoImpl
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
@@ -15,25 +13,27 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.nio.charset.StandardCharsets
 import java.util.concurrent.TimeUnit
 
-class MockUser {
-    companion object{
+class UsersFakeServices {
+    companion object {
+
+
         val successDispatchers: Dispatcher = object : Dispatcher() {
             override fun dispatch(request: RecordedRequest): MockResponse {
                 print(request.path)
                 return when (request.path) {
-                    else ->MockResponse().apply { addResponse("user_response.json") }
+                    else -> MockResponse().apply { addResponse("user_response.json") }
                 }
             }
         }
 
-       val timeOutDispatchers: Dispatcher = object : Dispatcher() {
+        val timeOutDispatchers: Dispatcher = object : Dispatcher() {
             override fun dispatch(request: RecordedRequest): MockResponse {
                 print(request.path)
                 return when (request.path) {
-                    else -> MockResponse().apply { addResponse("user_response.json",6) }
+                    else -> MockResponse().apply { addResponse("user_response.json", 6) }
                 }
             }
-    }
+        }
 
         val errorDispatchers: Dispatcher = object : Dispatcher() {
             override fun dispatch(request: RecordedRequest): MockResponse {
@@ -43,26 +43,26 @@ class MockUser {
                 }
             }
         }
-
     }
+
     val mockWebServer = MockWebServer().apply {
         url("/")
     }
 
-    private val userDataSource = Retrofit.Builder()
+    val userApiServices: UserApiServices = Retrofit.Builder()
         .baseUrl(mockWebServer.url("/"))
         .client(OkHttpClient.Builder().build())
         .addConverterFactory(GsonConverterFactory.create())
         .build().create(UserApiServices::class.java)
 
-    val userRepository = UserRepoImpl(MockUserDao(),userDataSource)
+
 }
 
-fun MockResponse.addResponse(filePath: String,delay:Long=0): MockResponse {
+fun MockResponse.addResponse(filePath: String, delay: Long = 0): MockResponse {
     val inputStream = javaClass.classLoader?.getResourceAsStream(filePath)
     val source = inputStream?.source()?.buffer()
     source?.let {
-        setBodyDelay(delay,TimeUnit.SECONDS)
+        setBodyDelay(delay, TimeUnit.SECONDS)
         setResponseCode(200)
         setBody(it.readString(StandardCharsets.UTF_8))
     }

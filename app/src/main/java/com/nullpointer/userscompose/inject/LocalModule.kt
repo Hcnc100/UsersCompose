@@ -2,9 +2,10 @@ package com.nullpointer.userscompose.inject
 
 import android.content.Context
 import androidx.room.Room
+import com.nullpointer.userscompose.data.local.datasource.UsersLocalDataSource
 import com.nullpointer.userscompose.data.local.room.UsersDao
 import com.nullpointer.userscompose.data.local.room.UsersDatabase
-import com.nullpointer.userscompose.data.local.room.UsersLocalDataSource
+import com.nullpointer.userscompose.data.local.datasource.UsersLocalDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,6 +39,6 @@ object LocalModule {
     @Singleton
     fun provideUsersLocalUsersDataSource(
         usersDao: UsersDao
-    ):UsersLocalDataSource= UsersLocalDataSource(usersDao)
+    ): UsersLocalDataSourceImpl = UsersLocalDataSourceImpl(usersDao)
 
 }

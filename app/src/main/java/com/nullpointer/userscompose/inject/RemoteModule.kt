@@ -2,6 +2,7 @@ package com.nullpointer.userscompose.inject
 
 import com.nullpointer.userscompose.data.remote.UserApiServices
 import com.nullpointer.userscompose.data.remote.UsersRemoteDataSource
+import com.nullpointer.userscompose.data.remote.UsersRemoteDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,5 +40,5 @@ object RemoteModule {
     @Singleton
     fun provideUserRemoteDataSource(
         usersApiServices: UserApiServices
-    ):UsersRemoteDataSource= UsersRemoteDataSource(usersApiServices)
+    ):UsersRemoteDataSourceImpl= UsersRemoteDataSourceImpl(usersApiServices)
 }

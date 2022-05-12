@@ -3,16 +3,17 @@ package com.nullpointer.userscompose.domain.users
 import com.nullpointer.userscompose.core.utils.InternetCheck
 import com.nullpointer.userscompose.core.utils.InternetCheckError
 import com.nullpointer.userscompose.core.utils.ServerTimeOut
-import com.nullpointer.userscompose.data.local.room.UsersLocalDataSource
+import com.nullpointer.userscompose.data.local.datasource.UsersLocalDataSourceImpl
 import com.nullpointer.userscompose.data.remote.UsersRemoteDataSource
+import com.nullpointer.userscompose.data.remote.UsersRemoteDataSourceImpl
 import com.nullpointer.userscompose.models.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withTimeoutOrNull
 import javax.inject.Inject
 
 class UserRepoImpl @Inject constructor(
-    private val usersLocalDataSource: UsersLocalDataSource,
-    private val usersRemoteDataSource: UsersRemoteDataSource
+    private val usersLocalDataSource: UsersLocalDataSourceImpl,
+    private val usersRemoteDataSource: UsersRemoteDataSourceImpl
 ) : UsersRepository {
 
     override val listUsers: Flow<List<User>> = usersLocalDataSource.listUsers
@@ -21,8 +22,7 @@ class UserRepoImpl @Inject constructor(
         // * if the internet is not available throw exception
         if (!InternetCheck.isNetworkAvailable()) throw InternetCheckError()
         val newUser = withTimeoutOrNull(5_000) {
-            val userResponse = usersRemoteDataSource.getNewUser().users[0]
-            User.fromUserResponse(userResponse)
+            usersRemoteDataSource.getNewUser()
         }
         // * if time out so send time out error
 

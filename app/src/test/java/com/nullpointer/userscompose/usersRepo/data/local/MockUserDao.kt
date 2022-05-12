@@ -1,4 +1,4 @@
-package com.nullpointer.userscompose.usersRepo.repository
+package com.nullpointer.userscompose.usersRepo.data.local
 
 import com.nullpointer.userscompose.data.local.room.UsersDao
 import com.nullpointer.userscompose.models.User
@@ -13,26 +13,31 @@ class MockUserDao : UsersDao {
     override fun getAllUsers(): Flow<List<User>> =
         users
 
-    override fun addNewUser(user: User) {
-        users.value = users.value.toMutableList().apply { add(user) }
+    override suspend fun addListUsers(list: List<User>) {
+        users.value = users.value.toMutableList().apply { addAll(list) }
     }
 
-    override fun deleterUser(user: User) {
-        users.value = users.value.toMutableList().apply { remove(user) }
-    }
-
-    override fun deleterUsersBYId(list: List<Long>) {
+    override suspend fun deleterUsersById(list: List<Long>) {
         val listUsersDeleter=users.value.filter {
             list.contains(it.id)
         }
         users.value = users.value.toMutableList().apply { removeAll(listUsersDeleter) }
     }
 
-    override fun deleterAllUsers() {
+    override suspend fun addNewUser(user: User) {
+        users.value = users.value.toMutableList().apply { add(user) }
+    }
+
+    override suspend fun deleterUser(user: User) {
+        users.value = users.value.toMutableList().apply { remove(user) }
+    }
+
+
+    override suspend fun deleterAllUsers() {
         users.value= emptyList()
     }
 
-    override fun getUserById(id: Long): User? {
+    override suspend fun getUserById(id: Long): User? {
         return users.value.firstOrNull { it.id == id }
     }
 }
