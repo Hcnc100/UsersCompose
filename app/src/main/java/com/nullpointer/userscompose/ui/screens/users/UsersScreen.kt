@@ -40,6 +40,8 @@ import com.nullpointer.userscompose.ui.share.SelectionMenuToolbar
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -58,15 +60,22 @@ fun UsersScreen(
     val messageUser = userViewModel.messageErrorProcess
 
     LaunchedEffect(key1 = Unit) {
-        messageUser.collect {
-            if (it != -1) {
-                scaffoldState.snackbarHostState.showSnackbar(
-                    message = context.getString(it),
-                    duration = SnackbarDuration.Short
-                )
+        messageUser.filter { it != -1 }.collect {
+            scaffoldState.snackbarHostState.showSnackbar(
+                message = context.getString(it),
+                duration = SnackbarDuration.Short
+            )
+        }
+    }
+
+    LaunchedEffect(key1 = Unit) {
+        userViewModel.listUsers.first { it != null }.let {
+            if (!it.isNullOrEmpty()) {
+                selectViewModel.restoreSelectUsers(it)
             }
         }
     }
+
     BackHandler(selectViewModel.isSelectedEnable) {
         selectViewModel.clearSelection()
     }

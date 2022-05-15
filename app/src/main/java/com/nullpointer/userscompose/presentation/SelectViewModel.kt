@@ -15,31 +15,42 @@ class SelectViewModel @Inject constructor(
         const val KEY_LIST_SAVED = "KEY_LIST_SAVED"
     }
 
-    private var listUserSelect by SavableComposeState(savedStateHandle,
+    private var listIdsSelect by SavableComposeState(savedStateHandle,
         KEY_LIST_SAVED,
-        emptyList<User>())
+        emptyList<Long>())
+    private val listUsersSelect = mutableListOf<User>()
 
-    val isSelectedEnable get() = listUserSelect.isNotEmpty()
-    val numberSelection get() = listUserSelect.size
+    val isSelectedEnable get() = listIdsSelect.isNotEmpty()
+    val numberSelection get() = listIdsSelect.size
 
     fun changeItemSelected(item: User) {
-        listUserSelect = if (listUserSelect.contains(item)) {
+        listIdsSelect = if (listIdsSelect.contains(item.id)) {
             item.isSelect = false
-            listUserSelect - item
+            listUsersSelect.remove(item)
+            listIdsSelect - item.id!!
         } else {
             item.isSelect = true
-            listUserSelect + item
+            listUsersSelect.add(item)
+            listIdsSelect + item.id!!
         }
     }
 
-    fun getListSelectionAndClear():List<Long>{
-        val listIdMeasure=listUserSelect.map { it.id!! }
+    fun restoreSelectUsers(listUsers:List<User>){
+        listUsers.filter { listIdsSelect.contains(it.id!!) }.onEach {
+            it.isSelect=true
+        }.let {
+            listUsersSelect.addAll(it)
+        }
+    }
+
+    fun getListSelectionAndClear(): List<Long> {
+        val listIdMeasure = listOf(*listIdsSelect.toTypedArray())
         clearSelection()
         return listIdMeasure
     }
 
     fun clearSelection() {
-        listUserSelect.forEach { it.isSelect = false }
-        listUserSelect = emptyList()
+        listUsersSelect.forEach { it.isSelect = false }
+        listIdsSelect = emptyList()
     }
 }
