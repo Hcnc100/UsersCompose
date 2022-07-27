@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nullpointer.userscompose.R
+import com.nullpointer.userscompose.core.states.Resource
 import com.nullpointer.userscompose.core.utils.InternetCheckError
 import com.nullpointer.userscompose.core.utils.ServerTimeOut
 import com.nullpointer.userscompose.domain.users.UsersRepository
@@ -32,19 +33,18 @@ class UsersViewModel @Inject constructor(
     val messageErrorProcess = _messageErrorProcess.receiveAsFlow()
 
 
-    val listUsers = flow {
-        delay(1000)
-        userRepo.listUsers.collect {
-            emit(it)
+    val listUsers = flow<Resource<List<User>>> {
+        userRepo.listUsers.collect{
+            emit(Resource.Success(it))
         }
     }.catch {
         _messageErrorProcess.trySend(R.string.error_users_database)
-        Timber.e("Error al obtener los usuarios de la base de datos $it")
-        emit(emptyList())
+        Timber.e("Error get users of database $it")
+        emit(Resource.Failure)
     }.flowOn(Dispatchers.IO).stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5_000),
-        null
+        Resource.Loading
     )
 
 

@@ -13,9 +13,9 @@ data class User(
     val name: String,
     val lastName: String,
     val city: String,
-    val imgUser:String,
-    @PrimaryKey
-    val id: Long? = null,
+    val imgUser: String,
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
     val timestamp: Long = System.currentTimeMillis(),
 ) : Parcelable {
     @IgnoredOnParcel
@@ -77,7 +77,7 @@ data class User(
         result = 31 * result + lastName.hashCode()
         result = 31 * result + city.hashCode()
         result = 31 * result + imgUser.hashCode()
-        result = 31 * result + (id?.hashCode() ?: 0)
+        result = 31 * result + id.hashCode()
         result = 31 * result + isSelect.hashCode()
         return result
     }

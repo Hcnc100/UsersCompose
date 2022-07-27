@@ -35,4 +35,11 @@
     <string name="title_details_user">Detalles del usuario</string>
     <string name="error_users_database">Error al obtener los usuarios de la base de datos</string>
 
+    <string name="description_deleter_user_button">Elimina el usuario actual</string>
+    <string name="name_user_text">Nombre:</string>
+    <string name="last_name_user_text">Apellido:</string>
+    <string name="city_user_text">Cuidad:</string>
+    <string name="date_user_text">Fecha de guardado:</string>
+
+
 </resources>

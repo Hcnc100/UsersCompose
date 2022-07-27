@@ -35,4 +35,10 @@
     <string name="title_details_user">User details</string>
     <string name="error_users_database">Error getting users from database</string>
 
+    <string name="description_deleter_user_button">Deleter the current user</string>
+    <string name="name_user_text">Name:</string>
+    <string name="last_name_user_text">Last Name:</string>
+    <string name="city_user_text">City:</string>
+    <string name="date_user_text">Save Date:</string>
+
 </resources>

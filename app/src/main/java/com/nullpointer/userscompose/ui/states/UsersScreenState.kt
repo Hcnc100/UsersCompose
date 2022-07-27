@@ -3,6 +3,8 @@ package com.nullpointer.userscompose.ui.states
 import android.content.Context
 import androidx.annotation.StringRes
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberScaffoldState
@@ -15,7 +17,7 @@ import androidx.compose.ui.platform.LocalFocusManager
  class UsersScreenState(
     val scaffoldState: ScaffoldState,
     val context: Context,
-    val lazyListState: LazyListState,
+    val lazyListState: LazyGridState,
 ) {
 
      val isScrollInProgress get() = lazyListState.isScrollInProgress
@@ -31,7 +33,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 @Composable
 fun rememberUsersScreenState(
     scaffoldState: ScaffoldState = rememberScaffoldState(),
-    lazyListState: LazyListState= rememberLazyListState(),
+    lazyListState: LazyGridState= rememberLazyGridState(),
     context: Context = LocalContext.current,
 ) = remember(scaffoldState) {
     UsersScreenState(scaffoldState, context, lazyListState)

@@ -135,5 +135,10 @@ dependencies {
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0'
     androidTestImplementation 'androidx.test:rules:1.4.0'
 
+    implementation 'com.valentinilk.shimmer:compose-shimmer:1.0.3'
+
+    // * permissions
+    implementation "com.google.accompanist:accompanist-permissions:0.24.9-beta"
+
 
 }

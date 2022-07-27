@@ -27,16 +27,16 @@ class SelectViewModel @Inject constructor(
         listIdsSelect = if (listIdsSelect.contains(item.id)) {
             item.isSelect = false
             listUsersSelect.remove(item)
-            listIdsSelect - item.id!!
+            listIdsSelect - item.id
         } else {
             item.isSelect = true
             listUsersSelect.add(item)
-            listIdsSelect + item.id!!
+            listIdsSelect + item.id
         }
     }
 
     fun restoreSelectUsers(listUsers:List<User>){
-        listUsers.filter { listIdsSelect.contains(it.id!!) }.onEach {
+        listUsers.filter { listIdsSelect.contains(it.id) }.onEach {
             it.isSelect=true
         }.let {
             listUsersSelect.addAll(it)

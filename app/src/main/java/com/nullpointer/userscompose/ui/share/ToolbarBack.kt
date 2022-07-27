@@ -21,7 +21,10 @@ import timber.log.Timber
 
 @Composable
 fun ToolbarBack(title: String, actionBack: (() -> Unit)? = null) {
-    TopAppBar(title = { Text(title) },
+    TopAppBar(
+        title = { Text(title) },
+        backgroundColor = MaterialTheme.colors.primary,
+        contentColor = Color.White,
         navigationIcon = {
             actionBack?.let { action ->
                 IconButton(onClick = { action() }) {
