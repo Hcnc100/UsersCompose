@@ -1,0 +1,38 @@
+package com.nullpointer.userscompose.ui.states
+
+import android.content.Context
+import androidx.annotation.StringRes
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.ScaffoldState
+import androidx.compose.material.rememberScaffoldState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+
+ class UsersScreenState(
+    val scaffoldState: ScaffoldState,
+    val context: Context,
+    val lazyListState: LazyListState,
+) {
+
+     val isScrollInProgress get() = lazyListState.isScrollInProgress
+
+    suspend fun showSnackMessage(@StringRes stringRes: Int) {
+        scaffoldState.snackbarHostState.showSnackbar(
+            context.getString(stringRes)
+        )
+    }
+
+}
+
+@Composable
+fun rememberUsersScreenState(
+    scaffoldState: ScaffoldState = rememberScaffoldState(),
+    lazyListState: LazyListState= rememberLazyListState(),
+    context: Context = LocalContext.current,
+) = remember(scaffoldState) {
+    UsersScreenState(scaffoldState, context, lazyListState)
+}
