@@ -1,6 +1,7 @@
 package com.nullpointer.userscompose.ui.screens.users
 
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -32,7 +33,6 @@ import com.nullpointer.userscompose.ui.screens.destinations.DetailsScreenDestina
 import com.nullpointer.userscompose.ui.screens.empty.EmptyScreen
 import com.nullpointer.userscompose.ui.screens.users.components.LoadingUsers
 import com.nullpointer.userscompose.ui.screens.users.components.UserItem
-import com.nullpointer.userscompose.ui.share.BackHandler
 import com.nullpointer.userscompose.ui.share.ButtonToggleAddRemove
 import com.nullpointer.userscompose.ui.share.FabAnimation
 import com.nullpointer.userscompose.ui.share.SelectToolbar
@@ -95,29 +95,29 @@ fun UsersScreen(
                     userViewModel.deleterUser(selectViewModel.getListSelectionAndClear())
                 })
         }
-    ) {
+    ) { padding ->
 
         when (val listUsers = stateListUsers) {
             Resource.Failure -> {
                 EmptyScreen(
                     animation = R.raw.empty,
                     textEmpty = stringResource(R.string.text_empty_users),
-                    modifier = Modifier.padding(it)
+                    modifier = Modifier.padding(padding)
                 )
             }
             Resource.Loading -> {
-                LoadingUsers(modifier = Modifier.padding(it))
+                LoadingUsers(modifier = Modifier.padding(padding))
             }
             is Resource.Success -> {
                 if (listUsers.data.isEmpty()) {
                     EmptyScreen(
                         animation = R.raw.empty,
                         textEmpty = stringResource(R.string.text_empty_users),
-                        modifier = Modifier.padding(it)
+                        modifier = Modifier.padding(padding)
                     )
                 } else {
                     ListUsers(
-                        modifier = Modifier.padding(it),
+                        modifier = Modifier.padding(padding),
                         listUsers = listUsers.data,
                         gridState = usersScreenState.lazyListState,
                         isSelectedEnable = selectViewModel.isSelectedEnable,

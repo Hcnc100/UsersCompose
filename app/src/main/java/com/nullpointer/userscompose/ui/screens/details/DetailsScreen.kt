@@ -56,16 +56,16 @@ fun DetailsScreen(
         when ( LocalConfiguration.current.orientation) {
 
             Configuration.ORIENTATION_LANDSCAPE -> {
-                Row(modifier = Modifier.fillMaxWidth()) {
+                Row(modifier = Modifier.fillMaxWidth().padding(it)) {
                     HeaderUserPhoto(imgUser = user.imgUser, modifier = Modifier.weight(.3f))
                     InfoUser(user = user, Modifier.weight(.7f).fillMaxHeight())
                 }
             }
-            Configuration.ORIENTATION_PORTRAIT -> {
+            else -> {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .verticalScroll(rememberScrollState())
+                        .verticalScroll(rememberScrollState()).padding(it)
                 ) {
                     HeaderUserPhoto(imgUser = user.imgUser)
                     Spacer(modifier = Modifier.height(20.dp))
