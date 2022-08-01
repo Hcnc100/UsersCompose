@@ -5,10 +5,7 @@ import android.content.Context
 import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -47,10 +44,12 @@ fun SelectToolbar(
 ) {
 
     val (showMenu, changeVisibleMenu) = rememberSaveable { mutableStateOf(false) }
-    val title by derivedStateOf {
-        if (numberSelection == 0)
-            context.getString(titleDefault) else
-            context.getPlural(titleSelection, numberSelection)
+    val title by remember {
+        derivedStateOf {
+            if (numberSelection == 0)
+                context.getString(titleDefault) else
+                context.getPlural(titleSelection, numberSelection)
+        }
     }
 
 

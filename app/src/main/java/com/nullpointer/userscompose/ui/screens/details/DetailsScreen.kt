@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
@@ -56,16 +57,22 @@ fun DetailsScreen(
         when ( LocalConfiguration.current.orientation) {
 
             Configuration.ORIENTATION_LANDSCAPE -> {
-                Row(modifier = Modifier.fillMaxWidth().padding(it)) {
+                Row(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(it)) {
                     HeaderUserPhoto(imgUser = user.imgUser, modifier = Modifier.weight(.3f))
-                    InfoUser(user = user, Modifier.weight(.7f).fillMaxHeight())
+                    InfoUser(user = user,
+                        Modifier
+                            .weight(.7f)
+                            .fillMaxHeight())
                 }
             }
             else -> {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .verticalScroll(rememberScrollState()).padding(it)
+                        .verticalScroll(rememberScrollState())
+                        .padding(it)
                 ) {
                     HeaderUserPhoto(imgUser = user.imgUser)
                     Spacer(modifier = Modifier.height(20.dp))
@@ -83,7 +90,9 @@ private fun InfoUser(
     modifier: Modifier = Modifier,
     context: Context = LocalContext.current
 ) {
-    val textDateSave by derivedStateOf { user.timestamp.toFormat(context) }
+    val textDateSave by remember {
+        derivedStateOf { user.timestamp.toFormat(context) }
+    }
     Card(modifier = modifier.padding(5.dp)) {
         Column(modifier = Modifier.padding(10.dp)) {
             RowInfo(nameField = stringResource(R.string.name_user_text), dataField = user.name)

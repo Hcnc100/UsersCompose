@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -34,8 +35,10 @@ fun UserItem(
     actionClickSimple: (User) -> Unit,
 ) {
 
-    val colorBackground by derivedStateOf {
-        if (user.isSelect) Color.Cyan.copy(alpha = 0.4f) else Color.Unspecified
+    val colorBackground by remember{
+        derivedStateOf {
+            if (user.isSelect) Color.Cyan.copy(alpha = 0.4f) else Color.Unspecified
+        }
     }
 
     Card(
