@@ -35,7 +35,7 @@ fun UserItem(
     actionClickSimple: (User) -> Unit,
 ) {
 
-    val colorBackground by remember{
+    val background by remember(user.isSelect) {
         derivedStateOf {
             if (user.isSelect) Color.Cyan.copy(alpha = 0.4f) else Color.Unspecified
         }
@@ -46,12 +46,15 @@ fun UserItem(
         shape = RoundedCornerShape(10.dp)
     ) {
         Column(
-            modifier =Modifier.combinedClickable(
-                onClick = {
-                    if (isSelectedEnable) changeSelectState(user) else actionClickSimple(user)
-                },
-                onLongClick = { if (!isSelectedEnable) changeSelectState(user) },
-            ).drawBehind { drawRect(colorBackground) }.padding(10.dp),
+            modifier = Modifier
+                .combinedClickable(
+                    onClick = {
+                        if (isSelectedEnable) changeSelectState(user) else actionClickSimple(user)
+                    },
+                    onLongClick = { if (!isSelectedEnable) changeSelectState(user) },
+                )
+                .drawBehind { drawRect(background) }
+                .padding(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             ImageUser(
