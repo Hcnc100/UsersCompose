@@ -40,7 +40,9 @@ class DBRoomTest {
     }
 
     fun addListAndAddUserOne() = runBlocking {
-        listUsersFake.forEach(userDao::addNewUser)
+        listUsersFake.forEach {
+            userDao.addNewUser(it)
+        }
         val listUsersOne = userDao.getAllUsers().first()
 
         userDao.deleterAllUsers()
@@ -67,7 +69,7 @@ class DBRoomTest {
         // * verify exist random user is success insert
         // * and all users insert
         val random = listUsersFake.random()
-        val userGet = userDao.getUserById(random.id!!)
+        val userGet = userDao.getUserById(random.id)
         val listUsersRoom = userDao.getAllUsers().first()
         assertEquals(listUsersFake.size, listUsersRoom.size)
         assertTrue(listUsersRoom.containsAll(listUsersFake))
@@ -113,7 +115,7 @@ class DBRoomTest {
 
         val randomUser = listUsersFake.random()
         // * only one random user is true remove the other is random ids
-        userDao.deleterUsersById(listOf(randomUser.id!!, 123, 246))
+        userDao.deleterUsersById(listOf(randomUser.id, 123, 246))
 
         val listUsers = userDao.getAllUsers().first()
         // * expect list with only random user removed
@@ -132,7 +134,7 @@ class DBRoomTest {
         assertTrue(listUsers.isEmpty())
         // * all users get return null
         listUsersFake.forEach {
-            assertNull(userDao.getUserById(it.id!!))
+            assertNull(userDao.getUserById(it.id))
         }
     }
 
@@ -145,7 +147,7 @@ class DBRoomTest {
         val valueRange = (1..listUsersFake.size).random()
         val listUserIdsRandom = mutableSetOf<Long>()
         repeat(valueRange) {
-            listUserIdsRandom.add(listUsersFake.random().id!!)
+            listUserIdsRandom.add(listUsersFake.random().id)
         }
 
 
