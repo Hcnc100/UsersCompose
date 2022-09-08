@@ -44,7 +44,7 @@ fun SelectToolbar(
 ) {
 
     val (showMenu, changeVisibleMenu) = rememberSaveable { mutableStateOf(false) }
-    val title by remember {
+    val title by remember(numberSelection) {
         derivedStateOf {
             if (numberSelection == 0)
                 context.getString(titleDefault) else

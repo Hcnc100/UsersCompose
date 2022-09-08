@@ -29,7 +29,7 @@
     <string name="description_add_mew_user">Add a new user</string>
     <string name="description_deleter_user_selected">Delete selected users</string>
     <string name="description_cancel_add_user">Cancel the current operation</string>
-    <string name="description_img_user">User Image</string>
+    <string name="description_img_user">Image User from %s</string>
 
     <!-- details screen -->
     <string name="title_details_user">User details</string>

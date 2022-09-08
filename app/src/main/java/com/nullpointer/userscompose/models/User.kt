@@ -10,10 +10,10 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "users_table")
 @Parcelize
 data class User(
-    val name: String,
-    val lastName: String,
-    val city: String,
-    val imgUser: String,
+    val name: String = "",
+    val lastName: String = "",
+    val city: String = "",
+    val imgUser: String = "",
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val timestamp: Long = System.currentTimeMillis(),

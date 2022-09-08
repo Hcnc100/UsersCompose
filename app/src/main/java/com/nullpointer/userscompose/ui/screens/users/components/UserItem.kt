@@ -59,7 +59,8 @@ fun UserItem(
         ) {
             ImageUser(
                 urlImg = user.imgUser,
-                modifier = Modifier.size(80.dp)
+                modifier = Modifier.size(80.dp),
+                contentDescription = stringResource(R.string.description_img_user, user.name)
             )
             Spacer(modifier = Modifier.height(10.dp))
             Text(
@@ -76,6 +77,7 @@ fun UserItem(
 private fun ImageUser(
     urlImg: String,
     modifier: Modifier = Modifier,
+    contentDescription: String
 ) {
 
     AsyncImage(
@@ -87,7 +89,7 @@ private fun ImageUser(
             .data(urlImg)
             .crossfade(true)
             .build(),
-        contentDescription = stringResource(R.string.description_img_user),
+        contentDescription = contentDescription,
         modifier = modifier
 
     )

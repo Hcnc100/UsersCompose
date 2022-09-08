@@ -29,7 +29,7 @@
     <string name="description_add_mew_user">Agrega un nuevo usuario</string>
     <string name="description_deleter_user_selected">Elimina los usuarios seleccionados</string>
     <string name="description_cancel_add_user">Cancela la operacion actual</string>
-    <string name="description_img_user">Imagen del usuario</string>
+    <string name="description_img_user">Imagen de perfil de usuario %s</string>
 
     <!-- details screen -->
     <string name="title_details_user">Detalles del usuario</string>
