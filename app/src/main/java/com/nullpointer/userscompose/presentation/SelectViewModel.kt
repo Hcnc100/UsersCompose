@@ -12,7 +12,7 @@ class SelectViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     companion object {
-        const val KEY_LIST_SAVED = "KEY_LIST_SAVED"
+        private const val KEY_LIST_SAVED = "KEY_LIST_SAVED"
     }
 
     private var listIdsSelect by SavableComposeState(savedStateHandle,
