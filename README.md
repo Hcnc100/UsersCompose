@@ -1,38 +1,25 @@
 # UsersCompose
-<p>App to scan dogs, identify using tensorflow-lite and save them in a database.This using Heroku for save data user and auth </p>
-<p>This make with jetpack compose, room, retrofit and camera x </p>
+A simple App that makes use of retrofit to obtain users and save them in an internal database used room
+
+This app was made only to see how retrofit behaves with coroutines, through hilt as a dependency injector, and saving the results in a local database, in the process the ui of the app is changed to prevent double calls and inform to the user of operations in process
 
 ### Splash 
 
 <p>
-  <img src="https://i.imgur.com/jx3xCgd.png" alt="splash" width="200"/>
+  <img src="https://i.imgur.com/aykDEf0.png" alt="splash" width="200"/>
  </p>
 
-### SignIn, SignUp, SignOut
+### Home
 <p>
-  <img src="https://i.imgur.com/hNqKFjC.png" alt="sign in" width="200"/>
-  <img src="https://i.imgur.com/y5VtXEv.png" alt="sign up" width="200"/>
-  <img src="https://i.imgur.com/1bLhFJX.png" alt="sign out" width="200"/>
-</p>
- 
- ### Screen camera
-
-<p>
-  <img src="https://i.imgur.com/3qfCup3.png" alt="screen permission" width="200"/>
-  <img src="https://i.imgur.com/KVE5Ddo.png" alt="request permission" width="200"/>
-  <img src="https://i.imgur.com/cThpaZz.png" alt="request permission" width="200"/>
-</p>
- 
- ### List Dogs and Details
-
-<p>
-  <img src="https://i.imgur.com/bj770Bt.png" alt="list dogs" width="200"/>
-  <img src="https://i.imgur.com/aHrALde.png" alt="details dog saved" width="200"/>
-  <img src="https://i.imgur.com/PG4qg79.png" alt="details dog save" width="200"/>
+  <img src="https://i.imgur.com/HOS0mH1.png" alt="empty users" width="200"/>
+  <img src="https://i.imgur.com/tk9YNv6.png" alt="more users" width="200"/>
+  <img src="https://i.imgur.com/HojXox5.png" alt="select users" width="200"/>
 </p>
 
 
-### Dog try (pug)
+ ### Details 
 
-<a href="https://www.hospitalveterinariglories.com/wp-content/uploads/2020/12/16-12-20-Pug-o-carlino-un-gran-perro-en-un-cuerpo-pequen%CC%83o-1200x800.jpg">Photo dog</a>
+<p>
+  <img src="https://i.imgur.com/Uav3QQP.png" alt="details" width="200"/>
+ </p>
 
