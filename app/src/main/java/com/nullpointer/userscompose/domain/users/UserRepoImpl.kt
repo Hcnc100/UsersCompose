@@ -1,10 +1,8 @@
 package com.nullpointer.userscompose.domain.users
 
+import android.accounts.NetworkErrorException
 import com.nullpointer.userscompose.core.utils.InternetCheck
-import com.nullpointer.userscompose.core.utils.InternetCheckError
-import com.nullpointer.userscompose.core.utils.ServerTimeOut
 import com.nullpointer.userscompose.data.local.datasource.UsersLocalDataSourceImpl
-import com.nullpointer.userscompose.data.remote.UsersRemoteDataSource
 import com.nullpointer.userscompose.data.remote.UsersRemoteDataSourceImpl
 import com.nullpointer.userscompose.models.User
 import kotlinx.coroutines.flow.Flow
@@ -20,18 +18,14 @@ class UserRepoImpl @Inject constructor(
 
     override suspend fun addNewUser(): User {
         // * if the internet is not available throw exception
-        if (!InternetCheck.isNetworkAvailable()) throw InternetCheckError()
+        if (!InternetCheck.isNetworkAvailable()) throw NetworkErrorException()
         val newUser = withTimeoutOrNull(5_000) {
             usersRemoteDataSource.getNewUser()
+        }?.also {
+            usersLocalDataSource.addNewUser(it)
         }
         // * if time out so send time out error
-
-        if (newUser != null) {
-            usersLocalDataSource.addNewUser(newUser)
-            return newUser
-        }else{
-            throw ServerTimeOut()
-        }
+        return newUser!!
     }
 
     override suspend fun deleterUser(user: User) =

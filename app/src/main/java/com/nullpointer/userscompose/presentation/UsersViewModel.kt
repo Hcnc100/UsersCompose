@@ -1,5 +1,6 @@
 package com.nullpointer.userscompose.presentation
 
+import android.accounts.NetworkErrorException
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -7,12 +8,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nullpointer.userscompose.R
 import com.nullpointer.userscompose.core.states.Resource
-import com.nullpointer.userscompose.core.utils.InternetCheckError
-import com.nullpointer.userscompose.core.utils.ServerTimeOut
+import com.nullpointer.userscompose.core.utils.launchSafeIO
 import com.nullpointer.userscompose.domain.users.UsersRepository
 import com.nullpointer.userscompose.models.User
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import timber.log.Timber
@@ -49,42 +50,38 @@ class UsersViewModel @Inject constructor(
 
 
     fun addNewUser() {
-        jobAddUser?.cancel()
-        jobAddUser = viewModelScope.launch(Dispatchers.IO) {
-            isProcessing = true
-            delay(1000)
-            try {
-                userRepo.addNewUser()
-            } catch (e: Exception) {
-                when (e) {
-                    is CancellationException -> throw e
-                    is InternetCheckError -> _messageErrorProcess.trySend(R.string.error_internet)
-                    is ServerTimeOut -> _messageErrorProcess.trySend(R.string.server_time_now)
-                    else -> {
-                        _messageErrorProcess.trySend(R.string.error_unknow)
-                        Timber.e("Error desconocido $e")
-                    }
-                }
+        jobAddUser = launchSafeIO(
+            blockBefore = { isProcessing = true },
+            blockAfter = { isProcessing = false },
+            blockIO = { userRepo.addNewUser() },
+            blockException = { sendMessageException(it) })
+    }
+
+    private fun sendMessageException(exception: Exception) {
+        when (exception) {
+            is NetworkErrorException -> _messageErrorProcess.trySend(R.string.error_internet)
+            is NullPointerException -> _messageErrorProcess.trySend(R.string.server_time_now)
+            else -> {
+                _messageErrorProcess.trySend(R.string.error_unknow)
+                Timber.e("Unknown error: $exception")
             }
-            isProcessing = false
         }
     }
 
     fun cancelAddNewUser() {
         _messageErrorProcess.trySend(R.string.action_stop_add_user)
         jobAddUser?.cancel()
-        isProcessing = false
     }
 
-    fun deleterUser(user: User) = viewModelScope.launch(Dispatchers.IO) {
+    fun deleterUser(user: User) = launchSafeIO {
         userRepo.deleterUser(user)
     }
 
-    fun deleterUser(list: List<Long>) = viewModelScope.launch(Dispatchers.IO) {
+    fun deleterUser(list: List<Long>) = launchSafeIO {
         userRepo.deleterUserByIds(list)
     }
 
-    fun deleterAllUsers() = viewModelScope.launch(Dispatchers.IO) {
+    fun deleterAllUsers() = launchSafeIO {
         userRepo.deleterAllUsers()
     }
 }
