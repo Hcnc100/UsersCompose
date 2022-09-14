@@ -4,6 +4,7 @@ package com.nullpointer.userscompose.ui.share
 import android.content.Context
 import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -52,16 +53,25 @@ fun SelectToolbar(
         }
     }
 
+    val toolbarColor by animateColorAsState(
+        if (numberSelection == 0) MaterialTheme.colors.primary else MaterialTheme.colors.secondary
+    )
+    val textColor by animateColorAsState(
+        if (numberSelection == 0) Color.White else Color.Black
+    )
+
 
     TopAppBar(
-        backgroundColor = if (numberSelection == 0)  MaterialTheme.colors.primary else MaterialTheme.colors.secondary,
+        backgroundColor = toolbarColor,
         title = { Text(title) },
-        contentColor = Color.White,
+        contentColor = textColor,
         actions = {
             if (numberSelection != 0) {
                 IconButton(onClick = actionClear) {
-                    Icon(painterResource(id = R.drawable.ic_clear),
-                        contentDescription = stringResource(R.string.description_clear_selection))
+                    Icon(
+                        painterResource(id = R.drawable.ic_clear),
+                        contentDescription = stringResource(R.string.description_clear_selection)
+                    )
                 }
             } else {
                 IconButton(onClick = { changeVisibleMenu(!showMenu) }) {
