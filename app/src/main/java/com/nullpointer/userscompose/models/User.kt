@@ -1,6 +1,9 @@
 package com.nullpointer.userscompose.models
 
 import android.os.Parcelable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
@@ -10,17 +13,18 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "users_table")
 @Parcelize
 data class User(
-    val name: String = "",
-    val lastName: String = "",
-    val city: String = "",
-    val imgUser: String = "",
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
+    val name: String = "",
+    val city: String = "",
+    val lastName: String = "",
+    val imgUser: String = "",
     val timestamp: Long = System.currentTimeMillis(),
 ) : Parcelable {
+
     @IgnoredOnParcel
-    @Ignore
-    var isSelect: Boolean = false
+    @delegate:Ignore
+    var isSelect: Boolean by mutableStateOf(false)
 
     companion object {
         fun fromUserResponse(userResponse: ApiResponse.UserResponse): User {
@@ -55,32 +59,4 @@ data class User(
             }
         }
     }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as User
-
-        if (name != other.name) return false
-        if (lastName != other.lastName) return false
-        if (city != other.city) return false
-        if (imgUser != other.imgUser) return false
-        if (id != other.id) return false
-        if (isSelect != other.isSelect) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = name.hashCode()
-        result = 31 * result + lastName.hashCode()
-        result = 31 * result + city.hashCode()
-        result = 31 * result + imgUser.hashCode()
-        result = 31 * result + id.hashCode()
-        result = 31 * result + isSelect.hashCode()
-        return result
-    }
-
-
 }
