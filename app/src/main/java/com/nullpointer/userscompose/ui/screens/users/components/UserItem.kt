@@ -35,7 +35,6 @@ fun UserItem(
         if (user.isSelect) MaterialTheme.colors.primary else MaterialTheme.colors.surface,
     )
 
-
     Surface(
         elevation = 5.dp,
         color = surfaceColor,
