@@ -2,29 +2,24 @@ package com.nullpointer.userscompose.ui.screens.details
 
 import android.content.Context
 import android.content.res.Configuration
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import coil.transform.CircleCropTransformation
 import com.nullpointer.userscompose.R
+import com.nullpointer.userscompose.core.utils.AsyncImageFade
 import com.nullpointer.userscompose.core.utils.shareViewModel
 import com.nullpointer.userscompose.core.utils.toFormat
 import com.nullpointer.userscompose.models.User
@@ -60,21 +55,26 @@ fun DetailsScreen(
                 Row(modifier = Modifier
                     .fillMaxWidth()
                     .padding(it)) {
-                    HeaderUserPhoto(imgUser = user.imgUser, modifier = Modifier.weight(.3f))
-                    InfoUser(user = user,
+                    HeaderUserPhoto(
+                        imgUser = user.imgUser,
+                        modifier = Modifier.weight(.3f),
+                        nameUser = user.name,
+                    )
+                    InfoUser(
+                        user = user,
                         Modifier
                             .weight(.7f)
-                            .fillMaxHeight())
+                            .fillMaxHeight()
+                    )
                 }
             }
             else -> {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .verticalScroll(rememberScrollState())
                         .padding(it)
                 ) {
-                    HeaderUserPhoto(imgUser = user.imgUser)
+                    HeaderUserPhoto(imgUser = user.imgUser, nameUser = user.name)
                     Spacer(modifier = Modifier.height(20.dp))
                     InfoUser(user = user)
                 }
@@ -90,9 +90,7 @@ private fun InfoUser(
     modifier: Modifier = Modifier,
     context: Context = LocalContext.current
 ) {
-    val textDateSave by remember {
-        derivedStateOf { user.timestamp.toFormat(context) }
-    }
+    val textDateSave = remember { user.timestamp.toFormat(context) }
     Card(modifier = modifier.padding(5.dp)) {
         Column(modifier = Modifier.padding(10.dp)) {
             RowInfo(nameField = stringResource(R.string.name_user_text), dataField = user.name)
@@ -109,31 +107,35 @@ private fun InfoUser(
 @Composable
 private fun HeaderUserPhoto(
     imgUser: String,
-    modifier: Modifier = Modifier
+    nameUser: String,
+    modifier: Modifier = Modifier,
+    colorHeader: Color = MaterialTheme.colors.primary
 ) {
 
     Box(
         modifier = modifier
             .height(200.dp)
+            .fillMaxWidth()
+            .drawBehind {
+                drawRect(
+                    color = colorHeader,
+                    size = size.copy(height = size.height / 2)
+                )
+            }
+            .padding(15.dp)
     ) {
-        Box(
+
+        AsyncImageFade(
+            data = imgUser,
+            resourceLoading = R.drawable.ic_person,
+            resourceFailed = R.drawable.ic_broken_image,
+            contentDescription = stringResource(id = R.string.description_img_user, nameUser),
             modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(.5f)
-                .background(MaterialTheme.colors.primary)
-        )
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(imgUser)
-                .placeholder(R.drawable.ic_person)
-                .transformations(CircleCropTransformation())
-                .error(R.drawable.ic_broken_image)
-                .build(),
-            contentDescription = stringResource(id = R.string.description_img_user),
-            modifier = Modifier
-                .size(150.dp)
+                .fillMaxHeight()
+                .aspectRatio(1f)
                 .align(Alignment.Center)
         )
+
     }
 
 }

@@ -6,7 +6,10 @@ import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -45,12 +48,9 @@ fun SelectToolbar(
 ) {
 
     val (showMenu, changeVisibleMenu) = rememberSaveable { mutableStateOf(false) }
-    val title by remember(numberSelection) {
-        derivedStateOf {
-            if (numberSelection == 0)
-                context.getString(titleDefault) else
-                context.getPlural(titleSelection, numberSelection)
-        }
+    val title = remember(numberSelection) {
+        if (numberSelection == 0)
+            context.getString(titleDefault) else context.getPlural(titleSelection, numberSelection)
     }
 
     val toolbarColor by animateColorAsState(

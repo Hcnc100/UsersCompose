@@ -4,11 +4,19 @@ import android.content.Context
 import android.text.format.DateFormat
 import androidx.activity.ComponentActivity
 import androidx.annotation.PluralsRes
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import coil.compose.AsyncImagePainter
+import com.valentinilk.shimmer.Shimmer
+import com.valentinilk.shimmer.shimmer
 import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -49,4 +57,17 @@ fun ViewModel.launchSafeIO(
             blockAfter()
         }
     }
+}
+
+val AsyncImagePainter.isSuccess get() = state is AsyncImagePainter.State.Success
+
+@Composable
+fun getGrayColor(): Color {
+    return if (isSystemInDarkTheme()) Color.LightGray else Color.DarkGray
+}
+
+fun Modifier.myShimmer(
+    shimmer: Shimmer,
+): Modifier = composed {
+    shimmer(shimmer).background(getGrayColor())
 }

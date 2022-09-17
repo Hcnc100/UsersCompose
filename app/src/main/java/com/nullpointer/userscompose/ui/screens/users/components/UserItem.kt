@@ -11,14 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import coil.transform.CircleCropTransformation
 import com.nullpointer.userscompose.R
+import com.nullpointer.userscompose.core.utils.AsyncImageFade
 import com.nullpointer.userscompose.models.User
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -52,10 +49,12 @@ fun UserItem(
                 .padding(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            ImageUser(
-                urlImg = user.imgUser,
-                modifier = Modifier.size(80.dp),
-                contentDescription = stringResource(R.string.description_img_user, user.name)
+            AsyncImageFade(
+                data = user.imgUser,
+                resourceLoading = R.drawable.ic_person,
+                resourceFailed = R.drawable.ic_broken_image,
+                contentDescription = stringResource(id = R.string.description_img_user, user.name),
+                modifier = Modifier.size(80.dp)
             )
             Spacer(modifier = Modifier.height(10.dp))
             Text(
@@ -68,25 +67,3 @@ fun UserItem(
     }
 }
 
-@Composable
-private fun ImageUser(
-    urlImg: String,
-    modifier: Modifier = Modifier,
-    contentDescription: String
-) {
-
-    AsyncImage(
-        model = ImageRequest
-            .Builder(LocalContext.current)
-            .placeholder(R.drawable.ic_person)
-            .error(R.drawable.ic_broken_image)
-            .transformations(CircleCropTransformation())
-            .data(urlImg)
-            .crossfade(true)
-            .build(),
-        contentDescription = contentDescription,
-        modifier = modifier
-
-    )
-
-}
